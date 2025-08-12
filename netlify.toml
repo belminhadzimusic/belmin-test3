@@ -1,3 +1,11 @@
+# Edge Function attachment
 [[edge_functions]]
-  path = "/*"
-  function = "prerender"
+path = "/*"
+function = "prerender"
+
+# SPA redirect (server-side)
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+force = true
