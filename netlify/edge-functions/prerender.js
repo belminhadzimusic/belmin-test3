@@ -4,7 +4,7 @@ export default async (request, context) => {
   if (!isBot) return context.next();
 
   const token = Deno.env.get("PRERENDER_TOKEN") || "";
-  const base  = Deno.env.get("PRERENDER_BASE") || "https://service.prerender.io";
+  const base  = Deno.env.get("PRERENDER_BASE") || "https://service.prerender-staging.dev";
 
   const url = new URL(request.url);
   const target = `${base}/https://${url.hostname}${url.pathname}${url.search}`;
@@ -12,12 +12,10 @@ export default async (request, context) => {
   const headers = new Headers();
   if (token) headers.set("X-Prerender-Token", token);
 
-  // call Prerender
-  const resp = await fetch(target, { headers });
-
-  // --- DEBUG (safe) ---
-  const h = new Headers(resp.headers);
+  const upstream = await fetch(target, { headers });
+  const h = new Headers(upstream.headers);
   h.set("x-debug-prerender-base", base);
-  h.set("x-debug-token-present", token ? "true" : "false"); // no token value leaked
-  return new Response(resp.body, { status: resp.status, statusText: resp.statusText, headers: h });
+  h.set("x-debug-token-present", token ? "true" : "false");
+  h.set("x-debug-upstream-status", String(upstream.status));   // <— NEW
+  return new Response(upstream.body, { status: upstream.status, headers: h });
 };
