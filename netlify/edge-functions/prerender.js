@@ -1,4 +1,4 @@
-// netlify/edge-functions/prerender.js
+/* netlify/edge-functions/prerender.js
 export default async (request, context) => {
   try {
     const ua = request.headers.get("user-agent") || "";
@@ -47,4 +47,4 @@ export default async (request, context) => {
       headers: { "x-debug-edge-error": String(e).slice(0, 120) }
     });
   }
-};
+};*/
