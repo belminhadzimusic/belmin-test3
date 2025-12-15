@@ -11,8 +11,8 @@ export default async (request, context) => {
       return context.next();
     }
 
-    const token = Deno.env.get("PRERENDER_TOKEN") || "";
-    const base  = Deno.env.get("PRERENDER_BASE") || "https://service.prerender.io"; // prod default
+   // const token = Deno.env.get("PRERENDER_TOKEN") || "";
+   // const base  = Deno.env.get("PRERENDER_BASE") || "https://service.prerender.io"; // prod default
 
     // Include hash so hash-routes like /#/posts get rendered
     const fullUrl = `https://${url.hostname}${url.pathname}${url.search}${url.hash}`;
